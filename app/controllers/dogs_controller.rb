@@ -7,9 +7,11 @@ class DogsController < ApplicationController
   def create
     # Create a new dog
     dog = Dog.create(dog_params)
-
-    # respond with our new dog
-    render json: dog
+    if dog.valid?
+      render json: dog
+    else
+      render json: dog.errors, status: :unprocessable_entity
+    end
   end
 
   # Handle strong parameters, so we are secure
